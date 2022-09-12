@@ -14,12 +14,12 @@ type (
 	//easyjson:json
 	User struct {
 		Browsers []string `json:"browsers,omitempty,nocopy"`
-		Company  string   `json:"company,omitempty,nocopy"`
-		Country  string   `json:"country,omitempty,nocopy"`
-		Email    string   `json:"email,omitempty,nocopy"`
-		Job      string   `json:"job,omitempty,nocopy"`
-		Name     string   `json:"name,omitempty,nocopy"`
-		Phone    string   `json:"phone,omitempty,nocopy"`
+		// Company  string   `json:"company,omitempty,nocopy"`
+		// Country  string   `json:"country,omitempty,nocopy"`
+		Email string `json:"email,omitempty,nocopy"`
+		// Job      string   `json:"job,omitempty,nocopy"`
+		Name string `json:"name,omitempty,nocopy"`
+		// Phone    string   `json:"phone,omitempty,nocopy"`
 	}
 
 	Unmarshaler interface {
@@ -33,6 +33,9 @@ type (
 
 var (
 	json2 = jsoniter.ConfigCompatibleWithStandardLibrary
+	um1o  = um1{}
+	um2o  = um2{}
+	um3o  = um3{}
 )
 
 func (um1) Unmarshal(data []byte, u *User) error {
@@ -52,15 +55,15 @@ func FastSearch(out io.Writer, data []byte) {
 }
 
 func FastSearch1(out io.Writer, data []byte) {
-	fastSearch(out, data, um1{})
+	fastSearch(out, data, um1o)
 }
 
 func FastSearch2(out io.Writer, data []byte) {
-	fastSearch(out, data, um2{})
+	fastSearch(out, data, um2o)
 }
 
 func FastSearch3(out io.Writer, data []byte) {
-	fastSearch(out, data, um3{})
+	fastSearch(out, data, um3o)
 }
 
 func fastSearch(out io.Writer, data []byte, um Unmarshaler) {
@@ -68,11 +71,21 @@ func fastSearch(out io.Writer, data []byte, um Unmarshaler) {
 
 	user := User{}
 	fmt.Fprintln(out, "found users:")
-	for i, line := range bytes.Split(data, []byte("\n")) {
+	for i := 0; data != nil; i++ {
+		j := bytes.IndexRune(data, '\n')
+		if j == -1 {
+			j = len(data)
+		}
+
 		// fmt.Printf("%v %v\n", err, line)
-		err := um.Unmarshal(line, &user)
-		if err != nil {
+		if err := um.Unmarshal(data[:j], &user); err != nil {
 			panic(err)
+		}
+
+		if j == len(data) {
+			data = nil
+		} else {
+			data = data[j+1:]
 		}
 
 		isAndroid := false
@@ -97,8 +110,8 @@ func fastSearch(out io.Writer, data []byte, um Unmarshaler) {
 		}
 
 		// log.Println("Android and MSIE user:", user["name"], user["email"])
-		j := strings.IndexRune(user.Email, '@')
-		fmt.Fprintf(out, "[%d] %s <%s [at] %s>\n", i, user.Name, user.Email[:j], user.Email[j+1:])
+		h := strings.IndexRune(user.Email, '@')
+		fmt.Fprintf(out, "[%d] %s <%s [at] %s>\n", i, user.Name, user.Email[:h], user.Email[h+1:])
 	}
 
 	fmt.Fprintln(out, "\nTotal unique browsers", len(seenBrowsers))

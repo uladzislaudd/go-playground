@@ -59,18 +59,10 @@ func easyjson3486653aDecodeGithubComUladzislauddGoPlaygroundTasksHwHw3BenchPkgFa
 				}
 				in.Delim(']')
 			}
-		case "company":
-			out.Company = string(in.UnsafeString())
-		case "country":
-			out.Country = string(in.UnsafeString())
 		case "email":
 			out.Email = string(in.UnsafeString())
-		case "job":
-			out.Job = string(in.UnsafeString())
 		case "name":
 			out.Name = string(in.UnsafeString())
-		case "phone":
-			out.Phone = string(in.UnsafeString())
 		default:
 			in.SkipRecursive()
 		}
@@ -100,26 +92,6 @@ func easyjson3486653aEncodeGithubComUladzislauddGoPlaygroundTasksHwHw3BenchPkgFa
 			out.RawByte(']')
 		}
 	}
-	if in.Company != "" {
-		const prefix string = ",\"company\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.String(string(in.Company))
-	}
-	if in.Country != "" {
-		const prefix string = ",\"country\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.String(string(in.Country))
-	}
 	if in.Email != "" {
 		const prefix string = ",\"email\":"
 		if first {
@@ -130,16 +102,6 @@ func easyjson3486653aEncodeGithubComUladzislauddGoPlaygroundTasksHwHw3BenchPkgFa
 		}
 		out.String(string(in.Email))
 	}
-	if in.Job != "" {
-		const prefix string = ",\"job\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.String(string(in.Job))
-	}
 	if in.Name != "" {
 		const prefix string = ",\"name\":"
 		if first {
@@ -149,16 +111,6 @@ func easyjson3486653aEncodeGithubComUladzislauddGoPlaygroundTasksHwHw3BenchPkgFa
 			out.RawString(prefix)
 		}
 		out.String(string(in.Name))
-	}
-	if in.Phone != "" {
-		const prefix string = ",\"phone\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.String(string(in.Phone))
 	}
 	out.RawByte('}')
 }
