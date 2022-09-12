@@ -21,21 +21,21 @@ func init() {
 
 // вам надо написать более быструю оптимальную этой функции
 func FastSearch(out io.Writer) {
+	data, err := os.ReadFile(filePath)
+	if err != nil {
+		panic(err)
+	}
 	fast.FastSearch(out, data)
 }
 
 func FastSearch1(out io.Writer) {
-	data, err := os.ReadFile(filePath)
-	if err != nil {
-		panic(err)
-	}
-	fast.FastSearch(out, data)
+	fast.FastSearch1(out, data)
 }
 
 func FastSearch2(out io.Writer) {
-	data, err := os.ReadFile(filePath)
-	if err != nil {
-		panic(err)
-	}
-	fast.FastSearch(out, data)
+	fast.FastSearch2(out, data)
+}
+
+func FastSearch3(out io.Writer) {
+	fast.FastSearch3(out, data)
 }

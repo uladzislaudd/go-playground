@@ -57,3 +57,9 @@ func BenchmarkFast2(b *testing.B) {
 		FastSearch2(io.Discard)
 	}
 }
+
+func BenchmarkFast3(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		FastSearch3(io.Discard)
+	}
+}
