@@ -1,7 +1,8 @@
-package main
+package hw3bench
 
 import (
 	"bytes"
+	"io"
 	"io/ioutil"
 	"testing"
 )
@@ -42,5 +43,23 @@ func BenchmarkSlow(b *testing.B) {
 func BenchmarkFast(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		FastSearch(ioutil.Discard)
+	}
+}
+
+func BenchmarkFast1(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		FastSearch1(io.Discard)
+	}
+}
+
+func BenchmarkFast2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		FastSearch2(io.Discard)
+	}
+}
+
+func BenchmarkFast3(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		FastSearch3(io.Discard)
 	}
 }

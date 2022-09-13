@@ -1,4 +1,4 @@
-package main
+package hw3bench
 
 import (
 	"encoding/json"
